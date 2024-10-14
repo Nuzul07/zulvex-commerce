@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Voucher extends Model
+class Cart extends Model
 {
     use HasFactory;
 
     // Define the custom primary key
-    protected $primaryKey = 'v_code';
+    protected $primaryKey = 'c_code';
 
     // If your primary key is not an incrementing integer
     public $incrementing = false;  // Only if your primary key is not auto-incrementing
@@ -19,4 +19,9 @@ class Voucher extends Model
     protected $keyType = 'string'; //
 
     protected $guarded = [];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'p_code');
+    }
 }

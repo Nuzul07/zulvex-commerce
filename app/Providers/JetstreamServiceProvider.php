@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Actions\Jetstream\DeleteUser;
+use App\Http\Responses\LoginResponse as ResponsesLoginResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Validation\ValidationException;
+use Laravel\Fortify\Contracts\LoginResponse;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,8 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->configurePermissions();
 
         Jetstream::deleteUsersUsing(DeleteUser::class);
+
+        $this->app->singleton(LoginResponse::class, ResponsesLoginResponse::class);
 
         // Custom authentication logic for login
         Fortify::authenticateUsing(function (Request $request) {

@@ -4,22 +4,31 @@ import { ref, onMounted, onUnmounted } from "vue";
 // Sidebar Toggle
 const sidebarOpen = ref(true);
 
-function toggleSidebar() {
+const toggleSidebar = () => {
     sidebarOpen.value = !sidebarOpen.value;
 }
 // Dropdown Menu State
 const openDropdown = ref(null);
 
-function toggleDropdown(menu) {
+const toggleDropdown = (menu) => {
     openDropdown.value = openDropdown.value === menu ? null : menu;
 }
 
 const avatarOpen = ref(false);
 const avatarMenu = ref(null);
 
-function toggleAvatar() {
+const toggleAvatar = () => {
     avatarOpen.value = !avatarOpen.value;
 }
+
+const logout = async () => {
+    try {
+        await axios.post(route("logout"));
+        window.location.href = route("login");
+    } catch (error) {
+        console.error("Logout failed:", error);
+    }
+};
 </script>
 <template>
     <div class="flex h-screen" ref="avatarMenu">
@@ -104,12 +113,12 @@ function toggleAvatar() {
                             class="ml-4 mt-2 space-y-2"
                         >
                             <li>
-                                <a href="#" class="text-sm hover:text-blue-500"
+                                <a :href="route('address')" class="text-sm hover:text-blue-500"
                                     >Address</a
                                 >
                             </li>
                             <li>
-                                <a href="#" class="text-sm hover:text-blue-500"
+                                <a :href="route('voucher')" class="text-sm hover:text-blue-500"
                                     >Voucher</a
                                 >
                             </li>
@@ -122,21 +131,28 @@ function toggleAvatar() {
                     </li>
                     <li>
                         <a
-                            href="#"
+                            :href="route('product')"
                             class="block p-2 rounded-lg hover:bg-gray-200"
                             >Products</a
                         >
                     </li>
                     <li>
                         <a
-                            href="#"
+                            :href="route('trans')"
                             class="block p-2 rounded-lg hover:bg-gray-200"
                             >Transactions</a
                         >
                     </li>
                     <li>
                         <a
-                            href="#"
+                            :href="route('review')"
+                            class="block p-2 rounded-lg hover:bg-gray-200"
+                            >Reviews</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            :href="route('payment')"
                             class="block p-2 rounded-lg hover:bg-gray-200"
                             >Payment</a
                         >
@@ -180,7 +196,7 @@ function toggleAvatar() {
                     />
                     <div
                         v-if="avatarOpen"
-                        class="absolute right-6 top-10 mt-16 w-56 bg-white rounded-lg shadow-lg py-2"
+                        class="absolute right-6 top-10 mt-16 w-56 bg-white rounded-lg shadow-lg py-2 z-20"
                     >
                         <div class="px-4 py-2">
                             <span class="block text-sm font-semibold"
@@ -222,8 +238,8 @@ function toggleAvatar() {
 
                         <div class="px-4 py-2">
                             <a
-                                href="#"
-                                class="flex items-center space-x-2 hover:bg-gray-100 px-2 py-1 rounded"
+                                @click="logout"
+                                class="flex items-center space-x-2 hover:bg-gray-100 px-2 py-1 rounded cursor-pointer"
                             >
                                 <img
                                     src="/storage/icon/logout.png"

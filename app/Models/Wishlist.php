@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Voucher extends Model
+class Wishlist extends Model
 {
     use HasFactory;
 
     // Define the custom primary key
-    protected $primaryKey = 'v_code';
+    protected $primaryKey = 'w_code';
 
     // If your primary key is not an incrementing integer
     public $incrementing = false;  // Only if your primary key is not auto-incrementing

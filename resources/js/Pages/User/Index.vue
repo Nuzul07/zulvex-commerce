@@ -12,22 +12,26 @@ import WishlistDetail from "@/Components/WishlistDetail.vue";
 import AboutUs from "@/Components/AboutUs.vue";
 import ContactPage from "@/Components/ContactPage.vue";
 import Checkout from "@/Components/Checkout.vue";
+import ProductDetailFull from "@/Components/ProductDetailFull.vue";
+
+const props = defineProps({
+    wishlist_count: Number,
+});
+
+console.log(props.wishlist_count)
 </script>
 <template>
     <Head title="Homepage" />
-    <UserLayout>
+    <UserLayout :wishlist_count="props.wishlist_count">
         <template #content>
             <main class="flex-grow">
                 <div class="max-w-7xl mx-auto py-10">
                     <Carousel />
                     <CategoryGrid />
-                    <NewArrivals />
+                    <ProductDetailFull />
                     <FeatureCards />
                     <ProductCollection />
                     <ProductDetails />
-                    <Cart />
-                    <WishlistDetail />
-                    <Checkout />
                 </div>
             </main>
         </template>

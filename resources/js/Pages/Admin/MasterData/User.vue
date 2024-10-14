@@ -60,10 +60,6 @@ const modalDetailUser = (d) => {
     selectDataUser(d);
     modal.detailUser = true;
 };
-
-const userAll = () => {
-
-}
  
 //fetch user data
 const user = ref([]);
@@ -233,11 +229,11 @@ const updateNonAktif = async (d) => {
             <div class="bg-white shadow rounded-lg p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold">Users Data</h2>
-                    <button
+                    <!-- <button
                         class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                     >
                         Export
-                    </button>
+                    </button> -->
                 </div>
 
                 <input
@@ -302,6 +298,20 @@ const updateNonAktif = async (d) => {
                         </tr>
                     </tbody>
                 </table>
+                <div class="w-full text-center mt-2">
+                    <span
+                        class="text-center text-md text-black"
+                        v-if="userLoading"
+                        >Sedang Memuat...</span
+                    >
+                </div>
+                <div class="w-full text-center mt-2">
+                    <span
+                        class="text-center text-xl text-black"
+                        v-if="!userLoading && user.length < 1"
+                        >Tidak Ada Data</span
+                    >
+                </div>
 
                 <!-- Pagination -->
                 <div class="flex justify-between items-center mt-4">
@@ -337,7 +347,6 @@ const updateNonAktif = async (d) => {
                 <Modal
                     :show="modal.detailUser"
                     maxWidth="2xl"
-                    classHeader="bg-sky-700 text-white"
                 >
                     <template #title> Detail User </template>
                     <template #content>

@@ -46,41 +46,69 @@
                     <input
                         type="text"
                         placeholder="Search For items..."
-                        class="w-[400px] px-4 py-2 border-none focus:ring-yellow-500 focus:border-yellow-500     rounded-l-lg"
+                        class="w-[400px] px-4 py-2 border-none focus:ring-yellow-500 focus:border-yellow-500 rounded-l-lg"
                     />
                     <button
-                        class=" text-white px-4 py-2 rounded-r-lg hover:bg-gray-200"
+                        class="text-white px-4 py-2 rounded-r-lg hover:bg-gray-200"
                     >
-                        <img src="/storage/icon/search.png" alt="" loading="lazy">
+                        <img
+                            src="/storage/icon/search.png"
+                            alt=""
+                            loading="lazy"
+                        />
                     </button>
                 </div>
 
                 <!-- Menu Icons Section -->
                 <div class="flex items-center space-x-5 text-gray-800">
                     <a
-                        href="/account"
+                        :href="route('account')"
                         class="flex items-center hover:text-yellow-500"
                     >
-                        <img src="/storage/icon/user.png" alt="" loading="lazy">
+                        <img
+                            src="/storage/icon/user.png"
+                            alt=""
+                            loading="lazy"
+                        />
                         <span class="ml-1">Account</span>
                     </a>
                     <a
-                        href="/wishlist"
-                        class="flex items-center hover:text-yellow-500"
+                        :href="route('wishlist')"
+                        class="relative flex items-center hover:text-yellow-500"
                     >
-                        <img src="/storage/icon/heart.png" alt="" loading="lazy">
+                        <img
+                            src="/storage/icon/heart.png"
+                            alt=""
+                            loading="lazy"
+                        />
                         <span class="ml-1">Wishlist</span>
+                        <!-- Badge for counter -->
+                        <span
+                            class="absolute top-0 right-16 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center"
+                        >
+                            {{ wishlistCount }}
+                        </span>
                     </a>
                     <a
-                        href="/cart"
-                        class="flex items-center hover:text-yellow-500"
+                        :href="route('cart')"
+                        class="relative flex items-center hover:text-yellow-500"
                     >
-                        <img src="/storage/icon/cart.png" alt="" loading="lazy">
+                        <img
+                            src="/storage/icon/cart.png"
+                            alt=""
+                            loading="lazy"
+                        />
                         <span class="ml-1">Cart</span>
+                        <!-- Badge for counter -->
+                        <span
+                            class="absolute top-0 right-9 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center"
+                        >
+                            {{ cartCount }}
+                        </span>
                     </a>
                 </div>
             </div>
-            <hr class="mx-10">
+            <hr class="mx-10" />
             <!-- Dropdown Menu for Large Screens -->
             <nav
                 class="hidden lg:flex justify-between items-center px-4 max-w-7xl mx-auto my-4"
@@ -102,19 +130,9 @@
                         >
                     </div>
                 </div>
-                <div class="relative group">
-                    <button class="hover:text-yellow-500">Products</button>
-                    <div
-                        class="absolute left-0 hidden group-hover:block bg-white border rounded-lg shadow-lg w-48"
-                    >
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                            >Product 1</a
-                        >
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                            >Product 2</a
-                        >
-                    </div>
-                </div>
+                <a :href="route('productCollect')" class="hover:text-yellow-500"
+                    >Product</a
+                >
                 <a href="about-us" class="hover:text-yellow-500">About Us</a>
                 <a href="contact-us" class="hover:text-yellow-500">Contact</a>
             </nav>
@@ -327,28 +345,6 @@
                             </svg>
                         </a>
                     </div>
-                    <div class="flex space-x-2 mt-4">
-                        <img
-                            src="/path/to/photo1.jpg"
-                            alt="Photo 1"
-                            class="w-10 h-10 rounded-md"
-                        />
-                        <img
-                            src="/path/to/photo2.jpg"
-                            alt="Photo 2"
-                            class="w-10 h-10 rounded-md"
-                        />
-                        <img
-                            src="/path/to/photo3.jpg"
-                            alt="Photo 3"
-                            class="w-10 h-10 rounded-md"
-                        />
-                        <img
-                            src="/path/to/photo4.jpg"
-                            alt="Photo 4"
-                            class="w-10 h-10 rounded-md"
-                        />
-                    </div>
                 </div>
             </div>
 
@@ -363,7 +359,15 @@
 </template>
 
 <script setup>
-// No script needed unless you have dynamic logic
+import { useCartStore } from "@/Pages/User/Store/cartStore";
+import { useWishlistStore } from "@/Pages/User/Store/wishlistStore";
+import { computed } from "vue";
+
+const wishlistStore = useWishlistStore();
+const cartStore = useCartStore()
+
+const wishlistCount = computed(() => wishlistStore.wishlistCount);
+const cartCount = computed(() => cartStore.cartCount)
 </script>
 
 <style scoped>
